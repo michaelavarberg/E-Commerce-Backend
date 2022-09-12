@@ -27,6 +27,7 @@ Tag.belongsToMany(Product, {
     unique: false,
   },
 });
+
 module.exports = {
   Product,
   Category,
