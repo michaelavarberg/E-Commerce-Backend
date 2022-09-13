@@ -18,21 +18,64 @@ router.get("/", async (req, res) => {
   // be sure to include its associated Products
 });
 
-router.get("/:id", (req, res) => {
+//working
+router.get("/:id", async (req, res) => {
   // find one category by its `id` value
+  try {
+    const CategoriesData = await Category.findByPk(req.params.id, {
+      include: [{ model: Product }],
+    });
+    if (!CategoriesData) {
+      res.status(404).json({ message: "No categories found with this id!" });
+      return;
+    }
+    res.status(200).json(CategoriesData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
   // be sure to include its associated Products
 });
 
-router.post("/", (req, res) => {
+//working
+router.post("/", async (req, res) => {
   // create a new category
+  try {
+    const CategoriesData = await Category.create(req.body);
+    res.status(200).json(CategoriesData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
-router.put("/:id", (req, res) => {
+//not working - error in insomnia
+router.put("/:id", async (req, res) => {
   // update a category by its `id` value
+  try {
+    const CategoriesData = await Category.update(req.body);
+    res.status(200).json(CategoriesData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 
-router.delete("/:id", (req, res) => {
-  // delete a category by its `id` value
+//not working - long error about a constraint on the foreign key
+router.delete("/:id", async (req, res) => {
+  try {
+    const CategoriesData = await Category.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!CategoriesData) {
+      res.status(404).json({ message: "No category found with this id!" });
+      return;
+    }
+
+    res.status(200).json(CategoriesData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;
