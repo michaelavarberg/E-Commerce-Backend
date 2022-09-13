@@ -47,18 +47,27 @@ router.post("/", async (req, res) => {
   }
 });
 
-//not working - error in insomnia
+//working
 router.put("/:id", async (req, res) => {
   // update a category by its `id` value
   try {
-    const CategoriesData = await Category.update(req.body);
-    res.status(200).json(CategoriesData);
-  } catch (err) {
-    res.status(400).json(err);
+    const categoryData = await Category.update(
+      {
+        category_name: req.body.category_name,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).json(categoryData);
+  } catch (error) {
+    res.status(400).json(error);
   }
 });
 
-//not working - long error about a constraint on the foreign key
+//working
 router.delete("/:id", async (req, res) => {
   try {
     const CategoriesData = await Category.destroy({
@@ -66,11 +75,6 @@ router.delete("/:id", async (req, res) => {
         id: req.params.id,
       },
     });
-
-    if (!CategoriesData) {
-      res.status(404).json({ message: "No category found with this id!" });
-      return;
-    }
 
     res.status(200).json(CategoriesData);
   } catch (err) {
