@@ -67,7 +67,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//working
+//not working - error in insomnia
 router.delete("/:id", async (req, res) => {
   try {
     const CategoriesData = await Category.destroy({
