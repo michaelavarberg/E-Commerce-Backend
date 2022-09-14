@@ -30,6 +30,8 @@ Use this code to get, create, update and delete data.
     
 To begin, select the correct database in MySQL. Seed the data in the command line. After the data is seeded, test out any of the routes in Insomnia to see the resulting json.
 
+Walk-through Video: https://drive.google.com/file/d/1fjMUQlA5lLhtnYxJFYz3SdhNYv1FFxOk/view
+
   ## License
   
 N/A
